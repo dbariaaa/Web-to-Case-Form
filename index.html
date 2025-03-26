@@ -3,126 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Form</title>
+    <title>Web-to-Case Form</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .row {
+            background-image: url('salesforce-bg.png'); /* Main background image */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
         }
 
-        .column {
-            flex: 0 0 48%;
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Floating white background */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .form-group {
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .form-wrapper {
+            background-color: white; /* Inner form background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two columns */
+            gap: 20px; /* Space between fields */
+        }
+
+        form label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        form input, form select, form textarea {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
             margin-bottom: 15px;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+        form input[type="submit"] {
+            grid-column: span 2; /* Submit button spans across both columns */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
         }
 
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        form input[type="submit"]:hover {
+            background-color: #45a049;
         }
 
+        textarea {
+            resize: vertical;
+        }
+
+        /* Adjust layout for specific fields */
         .full-width {
-            width: 100%;
+            grid-column: span 2; /* Span across both columns */
         }
 
-        .submit-button {
-            background-color: green;
+        .success-message {
+            display: none; /* Initially hidden */
+            text-align: center;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .success-message button {
+            background-color: #007bff;
             color: white;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            margin-top: 10px;
         }
 
-        .submit-button:hover {
-            background-color: darkgreen;
+        .success-message button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <form action="/submit" method="POST">
-            <!-- Row 1: Two columns -->
-            <div class="row">
-                <div class="column">
-                    <div class="form-group">
-                        <label for="case-record-type">Case Record Type</label>
-                        <select id="case-record-type" name="case-record-type">
-                            <option value="">--None--</option>
-                            <option value="type1">Type 1</option>
-                            <option value="type2">Type 2</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="contact-name">Contact Name</label>
-                        <input type="text" id="contact-name" name="contact-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Company</label>
-                        <input type="text" id="company" name="company">
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone-number">Phone Number</label>
-                        <input type="text" id="phone-number" name="phone-number">
-                    </div>
-                    <div class="form-group">
-                        <label for="intake-source">Intake Source</label>
-                        <select id="intake-source" name="intake-source">
-                            <option value="">--None--</option>
-                            <option value="source1">Source 1</option>
-                            <option value="source2">Source 2</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+    <div class="form-container">
+        <div class="logo-container">
+            <img src="salesforce-logo.jpg" alt="Salesforce Logo">
+        </div>
 
-            <!-- Row 2: Full-width Subject and Description -->
-            <div class="form-group full-width">
-                <label for="subject">Subject</label>
-                <input type="text" id="subject" name="subject">
-            </div>
+        <div class="form-wrapper">
+            <form id="caseForm" action="https://pax8--dev9.sandbox.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DO800000AyWk1" method="POST">
+                <input type="hidden" name="orgid" value="00DO800000AyWk1">
+                <input type="hidden" name="retURL" value="http://">
 
-            <div class="form-group full-width">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4"></textarea>
-            </div>
+                <!-- First column fields -->
+                <label for="recordType">Case Record Type</label>
+                <select id="recordType" name="recordType">
+                    <option value="">--None--</option>
+                    <option value="012PO0000012wc1">Account Owner Change</option>
+                    <option value="012PO000000btDd">Deal Desk</option>
+                    <option value="012PO000000jUUz">General Request</option>
+                    <option value="012PO0000012szp">Large Deal</option>
+                    <option value="012PO0000013qhR">Partner Program Request</option>
+                    <option value="012PO0000013qhS">Platform Fee Override</option>
+                    <option value="012PO000000iaar">Quota Attainment Inquiry</option>
+                    <option value="012PO000001E2sb">Sales Ops Helpdesk</option>
+                    <option value="012PO000000iaas">Strategic Account Plan</option>
+                    <option value="012O8000003Z9uj">Vendor Team Helpdesk</option>
+                </select>
 
-            <!-- Submit Button -->
-            <div class="form-group">
-                <button type="submit" class="submit-button">Submit</button>
-            </div>
-        </form>
+                <label for="name">Contact Name</label>
+                <input id="name" maxlength="80" name="name" size="20" type="text" />
+
+                <label for="company">Company</label>
+                <input id="company" maxlength="80" name="company" size="20" type="text" />
+
+                <!-- Second column fields -->
+                <label for="email">Email</label>
+                <input id="email" maxlength="80" name="email" size="20" type="text" />
+
+                <label for="phone">Phone Number</label>
+                <input id="phone" maxlength="40" name="phone" size="20" type="text" />
+
+                <label for="intakeSource">Intake Source</label>
+                <select id="00NO800000CbVkH" name="00NO800000CbVkH" title="Intake Source">
+                    <option value="">--None--</option>
+                    <option value="General Vendor Feedback">General Vendor Feedback</option>
+                    <option value="New Pax8 Vendor Interest">New Pax8 Vendor Interest</option>
+                    <option value="Vendor Escalation/Engagement Request">Vendor Escalation/Engagement Request</option>
+                    <option value="Vendor Promotion Campaign Inquiry">Vendor Promotion Campaign Inquiry</option>
+                    <option value="Vendor Activity Marketing Development Fund Request">Vendor Activity Marketing Development Fund Request</option>
+                    <option value="Vendor Training Request">Vendor Training Request</option>
+                    <option value="Vendor Resource Creation Request">Vendor Resource Creation Request</option>
+                    <option value="Vendor Roadmap Inquiry">Vendor Roadmap Inquiry</option>
+                </select>
+
+                <!-- Full width fields for Subject and Description -->
+                <label for="subject" class="full-width">Subject</label>
+                <input id="subject" class="full-width" maxlength="80" name="subject" size="20" type="text" />
+
+                <label for="description" class="full-width">Description</label>
+                <textarea name="description" class="full-width"></textarea>
+
+                <input type="submit" name="submit" value="Submit">
+            </form>
+        </div>
+
+        <!-- Success message (hidden initially) -->
+        <div class="success-message" id="successMessage">
+            <p>Case has been submitted successfully!</p>
+            <button id="closeButton">Close</button>
+        </div>
     </div>
+
+    <script>
+        // Form submission logic
+        document.getElementById('caseForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting
+
+            // Show the success message
+            document.getElementById('successMessage').style.display = 'block';
+            // Hide the form
+            document.getElementById('caseForm').style.display = 'none';
+        });
+
+        // Close button logic
+        document.getElementById('closeButton').addEventListener('click', function() {
+            // Redirect to form page (reloading the page)
+            location.reload();
+        });
+    </script>
 </body>
 </html>
