@@ -1,56 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-  <title>Case Submission Form</title>
-  <style>
-    /* Style for centering the form */
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-    }
-    form {
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      width: 350px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      text-align: left;
-    }
-    input, select, textarea {
-      width: 100%;
-      margin-bottom: 15px;
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-    input[type="submit"] {
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      border: none;
-    }
-    input[type="submit"]:hover {
-      background-color: #45a049;
-    }
-    img {
-      width: 100%;
-      height: auto;
-      margin-bottom: 15px;
-      border-radius: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web-to-Case Form</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('salesforce-bg.png'); /* Set your background image here */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Floating container */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 columns */
+            gap: 10px;
+        }
+
+        form label {
+            grid-column: span 2; /* Make labels full width */
+        }
+
+        form input, form select {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        form input[type="submit"] {
+            grid-column: span 2; /* Submit button full width */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .success-message {
+            display: none; /* Initially hidden */
+            text-align: center;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .success-message button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .success-message button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
   <!-- Add an image above the form (you can replace this with your image URL) -->
@@ -109,5 +137,31 @@
 
     <input type="submit" name="submit" value="Submit">
   </form>
+
+    <!-- Success message (hidden initially) -->
+        <div class="success-message" id="successMessage">
+            <p>Case has been submitted successfully!</p>
+            <button id="closeButton">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Form submission logic
+        document.getElementById('caseForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting
+
+            // Show the success message
+            document.getElementById('successMessage').style.display = 'block';
+            // Hide the form
+            document.getElementById('caseForm').style.display = 'none';
+        });
+
+        // Close button logic
+        document.getElementById('closeButton').addEventListener('click', function() {
+            // Redirect to form page (reloading the page)
+            location.reload();
+        });
+    </script>
+  
 </body>
 </html>
