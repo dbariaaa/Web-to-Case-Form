@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-image: url('salesforce-bg.png'); /* Set your background image here */
+            background-image: url('salesforce-bg.png'); /* Main background image */
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -19,22 +19,29 @@
         }
 
         .form-container {
-            background-color: rgba(255, 255, 255, 0.9); /* Floating container */
+            background-color: rgba(255, 255, 255, 0.8); /* Floating white background */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .form-wrapper {
+            background-color: white; /* Inner form background */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
         }
 
         form {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 columns */
-            gap: 10px;
+            grid-template-columns: 1fr 1fr; /* Two columns */
+            gap: 20px; /* Space between fields */
         }
 
         form label {
-            grid-column: span 2; /* Make labels full width */
+            font-weight: bold;
         }
 
         form input, form select {
@@ -44,7 +51,7 @@
         }
 
         form input[type="submit"] {
-            grid-column: span 2; /* Submit button full width */
+            grid-column: span 2; /* Submit button spans across both columns */
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -82,57 +89,61 @@
 </head>
 <body>
   <!-- Add an image above the form (you can replace this with your image URL) -->
-  <img src="salesforce logo.jpg.jpg" alt="Salesforce Logo" style="width: 200px; height: auto;">
   <form action="https://pax8--dev9.sandbox.my.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DO800000AyWk1" method="POST">
     <img src="salesforce logo.jpg.jpg" alt="Salesforce Logo" style="width: 200px; height: auto;" alt="Case Submission Banner">
     
     <input type="hidden" name="orgid" value="00DO800000AyWk1">
     <input type="hidden" name="retURL" value="http://">
-    
-    <label for="recordType">Case Record Type</label>
-    <select id="recordType" name="recordType">
-      <option value="">--None--</option>
-      <option value="012PO0000012wc1">Account Owner Change</option>
-      <option value="012PO000000btDd">Deal Desk</option>
-      <option value="012PO000000jUUz">General Request</option>
-      <option value="012PO0000012szp">Large Deal</option>
-      <option value="012PO0000013qhR">Partner Program Request</option>
-      <option value="012PO0000013qhS">Platform Fee Override</option>
-      <option value="012PO000000iaar">Quota Attainment Inquiry</option>
-      <option value="012PO000001E2sb">Sales Ops Helpdesk</option>
-      <option value="012PO000000iaas">Strategic Account Plan</option>
-      <option value="012O8000003Z9uj">Vendor Team Helpdesk</option>
-    </select>
 
-    <label for="name">Contact Name</label>
-    <input id="name" maxlength="80" name="name" size="20" type="text" />
+       <div class="form-container">
+        <div class="form-wrapper">
+            <form id="caseForm">
+            <!-- First column (4 fields) -->
+            <label for="recordType">Case Record Type</label>
+            <select id="recordType" name="recordType">
+              <option value="">--None--</option>
+              <option value="012PO0000012wc1">Account Owner Change</option>
+              <option value="012PO000000btDd">Deal Desk</option>
+              <option value="012PO000000jUUz">General Request</option>
+              <option value="012PO0000012szp">Large Deal</option>
+              <option value="012PO0000013qhR">Partner Program Request</option>
+              <option value="012PO0000013qhS">Platform Fee Override</option>
+              <option value="012PO000000iaar">Quota Attainment Inquiry</option>
+              <option value="012PO000001E2sb">Sales Ops Helpdesk</option>
+              <option value="012PO000000iaas">Strategic Account Plan</option>
+              <option value="012O8000003Z9uj">Vendor Team Helpdesk</option>
+            </select>
 
-    <label for="email">Email</label>
-    <input id="email" maxlength="80" name="email" size="20" type="text" />
+                <label for="name">Contact Name</label>
+                <input id="name" maxlength="80" name="name" type="text">
 
-    <label for="phone">Phone</label>
-    <input id="phone" maxlength="40" name="phone" size="20" type="text" />
+                <label for="email">Email</label>
+                <input id="email" maxlength="80" name="email" type="text">
 
-    <label for="company">Company</label>
-    <input id="company" maxlength="80" name="company" size="20" type="text" />
+                <label for="phone">Phone Number</label>
+                <input id="phone" maxlength="80" name="phone" type="text">
 
-    <label for="subject">Subject</label>
-    <input id="subject" maxlength="80" name="subject" size="20" type="text" />
+            <!-- Second column (4 fields) -->
+                <label for="company">Company</label>
+                <input id="company" maxlength="80" name="company">
+                
+                <label for="subject">Subject</label>
+                <input id="subject" maxlength="255" name="subject" type="text">
 
-    <label for="description">Description</label>
-    <textarea name="description"></textarea>
+                <label for="description">Description</label>
+                <input id="description" maxlength="500" name="description" type="text">
 
-    <label for="intakeSource">Intake Source</label>
-    <select id="00NO800000CbVkH" name="00NO800000CbVkH" title="Intake Source">
-      <option value="">--None--</option>
-      <option value="General Vendor Feedback">General Vendor Feedback</option>
-      <option value="New Pax8 Vendor Interest">New Pax8 Vendor Interest</option>
-      <option value="Vendor Escalation/Engagement Request">Vendor Escalation/Engagement Request</option>
-      <option value="Vendor Promotion Campaign Inquiry">Vendor Promotion Campaign Inquiry</option>
-      <option value="Vendor Activity Marketing Development Fund Request">Vendor Activity Marketing Development Fund Request</option>
-      <option value="Vendor Training Request">Vendor Training Request</option>
-      <option value="Vendor Resource Creation Request">Vendor Resource Creation Request</option>
-      <option value="Vendor Roadmap Inquiry">Vendor Roadmap Inquiry</option>
+                <label for="intakeSource">Intake Source</label>
+                <select id="00NO800000CbVkH" name="00NO800000CbVkH" title="Intake Source">
+                <option value="">--None--</option>
+          <option value="General Vendor Feedback">General Vendor Feedback</option>
+          <option value="New Pax8 Vendor Interest">New Pax8 Vendor Interest</option>
+          <option value="Vendor Escalation/Engagement Request">Vendor Escalation/Engagement Request</option>
+          <option value="Vendor Promotion Campaign Inquiry">Vendor Promotion Campaign Inquiry</option>
+          <option value="Vendor Activity Marketing Development Fund Request">Vendor Activity Marketing Development Fund Request</option>
+          <option value="Vendor Training Request">Vendor Training Request</option>
+          <option value="Vendor Resource Creation Request">Vendor Resource Creation Request</option>
+          <option value="Vendor Roadmap Inquiry">Vendor Roadmap Inquiry</option>
     </select>
 
     <input type="submit" name="submit" value="Submit">
